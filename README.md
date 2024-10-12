@@ -1,7 +1,3 @@
-Here's a sample README file for your "AR Interior Styler" project. You can customize it further based on your preferences or additional details you may want to include.
-
----
-
 # AR Interior Styler
 
 AR Interior Styler is a web application built using the MERN stack (MongoDB, Express, React, Node.js) that allows users to visualize and design their spaces using augmented reality. By leveraging the Model Viewer library, users can upload images of their rooms or use their device's camera to capture images and place 3D models within the captured spaces.
