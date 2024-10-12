@@ -1,0 +1,155 @@
+model-viewer {
+        width: calc(70vw - 30px); /* Full width minus side margins */
+        height: 80vh; /* Adjust height to leave space for slides */
+        background-color:#dab5be;
+        overflow: hidden; /* Hide overflow */
+        display: block; /* Ensures model viewer is a block element */
+        position: relative; /* Ensure proper positioning of child elements */
+        margin: 24px 50px; /* Add margin on top/bottom and left/right */
+    }
+
+#ar-button {
+    background-color: #fff; /* Background color */
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    bottom: 132px; /* Position above the slides */
+    padding: 8px 16px; /* Add padding for better size */
+    height: auto; /* Allow height to adjust based on content */
+    font-family: Roboto, sans-serif;
+    font-size: 16px; /* Font size */
+    color: #93485b; /* Text color */
+    line-height: normal; /* Reset line height to normal for text */
+    border-radius: 20px; /* Rounded corners */
+    border: 1px solid #DADCE0; /* Border style */
+    cursor: pointer; /* Change cursor on hover */
+    transition: background-color 0.3s; /* Smooth transition */
+    text-align: center; /* Center text horizontally */
+}
+
+#ar-button:hover {
+    background-color: #E8EAED; /* Change color on hover */
+}
+
+#ar-button:focus {
+    outline: none; /* Remove outline on focus */
+}
+
+#ar-button:focus-visible {
+    outline: 2px solid #93485b; /* Custom outline for keyboard users */
+}
+
+
+
+    #ar-button:active {
+        background-color: #E8EAED;
+    }
+
+    #ar-button:focus {
+        outline: none;
+    }
+
+    #ar-button:focus-visible {
+        outline: 1px solid #93485b;
+    }
+
+    /* Prompt for user to move the phone */
+    #ar-prompt {
+        position: absolute;
+        left: 50%;
+        bottom: 175px;
+        animation: elongate 2s infinite ease-in-out alternate;
+        display: none;
+    }
+
+    model-viewer[ar-status="session-started"] > #ar-prompt {
+        display: block;
+    }
+
+    #ar-prompt > img {
+        display: none;
+    }
+
+    /* Display failure message if AR tracking is lost */
+    #ar-failure {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 175px;
+        display: none;
+    }
+
+    model-viewer[ar-tracking="not-tracking"] > #ar-failure {
+        display: block;
+    }
+
+    /* Slider styling */
+    .slider {
+        width: 100%;
+        text-align: center;
+        overflow: hidden;
+        position: absolute;
+        bottom: 16px;
+    }
+
+    .slides {
+        display: flex;
+        justify-content: center; /* Center the slides within the slider */
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .slide {
+        scroll-snap-align: start;
+        flex-shrink: 0;
+        width: 80px; /* Set to desired smaller width */
+        height: 80px; /* Set to desired smaller height */
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-color: #fff;
+        margin: 0 3px; /* Adjust space between slides evenly */
+        border-radius: 10px;
+        border: none;
+        display: flex;
+        justify-content: center; /* Center content within the slide */
+        align-items: center; /* Center content vertically */
+    }
+
+    .slide.selected {
+    align-items: center; /* Center items vertically */
+    align-items: center; /* Center items vertically */
+    border: 2px solid #93485b;
+    }
+
+    .slide:focus {
+        outline: none;
+    }
+
+    .slide:focus-visible {
+        outline: 1px solid #4285f4;
+    }
+
+    @keyframes circle {
+        from { transform: translateX(-50%) rotate(0deg) translateX(50px) rotate(0deg); }
+        to   { transform: translateX(-50%) rotate(360deg) translateX(50px) rotate(-360deg); }
+    }
+
+    @keyframes elongate {
+        from { transform: translateX(100px); }
+        to   { transform: translateX(-100px); }
+    }
+
+    /* Background and loader for the model viewer */
+    model-viewer {
+        background-color:#dab5be;
+        overflow-x: hidden;
+    }
+
+    /* Hide child elements while model is loading */
+    :not(:defined) > * {
+        display: none;
+    }

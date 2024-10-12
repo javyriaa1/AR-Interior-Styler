@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Room Image</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center; /* Center align the text in the body */
+            background-color:  #dab5be; /* Light background for a soft look */
+            padding: 20px; /* Add some padding to the body */
+        }
+        h1 {
+            color: #333; /* Darker text for better readability */
+        }
+        #confirmation {
+            display: none; /* Initially hidden */
+            margin-top: 20px; /* Add some space above */
+        }
+        #selectedImage {
+            max-width: 100%; /* Responsive image */
+            height: auto;
+            margin-bottom: 10px; /* Space below the image */
+            border: 1px solid #ddd; /* Light border around the image */
+            border-radius: 5px; /* Rounded corners for the image */
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0; /* Space between buttons */
+        }
+        .button-wrapper {
+            background-color: #fff;
+            border: 2px dashed #93485b;; /* Dashed border */
+            border-radius: 10px; /* Rounded corners */
+            padding: 50px; /* Padding inside the container */
+            margin: 0 10px; /* Space between button containers */
+            text-align: center; /* Center align text */
+            cursor: pointer; /* Pointer cursor */
+            transition: background-color 0.3s; /* Smooth transition */
+        }
+        .button-wrapper:hover {
+            background-color: #e9f7ff; /* Light blue background on hover */
+        }
+        .button-icon {
+            font-size: 24px; /* Icon size */
+            color: #93485b; /* Icon color */
+            margin-bottom: 10px; /* Space below the icon */
+        }
+        .button-text {
+            font-size: 16px; /* Text size */
+            color: #333; /* Text color */
+        }
+        button {
+            padding: 10px 20px; /* Add some padding to buttons */
+            margin: 5px; /* Space between buttons */
+            font-size: 16px; /* Increase font size */
+            cursor: pointer; /* Pointer cursor on hover */
+            border: none; /* Remove default border */
+            border-radius: 5px; /* Rounded corners */
+            background-color: #93485b;; /* Bootstrap primary color */
+            color: white; /* White text color */
+            transition: background-color 0.3s; /* Smooth background color transition */
+        }
+        button:hover {
+            background-color: #93485b;; /* Darker blue on hover */
+        }
+        button:active {
+            background-color:#93485b; /* Even darker on click */
+        }
+        #yesButton {
+            background-color: #28a745; /* Green color for Yes button */
+        }
+        #noButton {
+            background-color: #dc3545; /* Red color for No button */
+        }
+        #yesButton:hover {
+            background-color: #218838; /* Darker green on hover */
+        }
+        #noButton:hover {
+            background-color: #c82333; /* Darker red on hover */
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Upload Your Room Image</h1>
+    
+    <div class="button-container">
+        <div class="button-wrapper" id="uploadButton">
+            <div class="button-icon"><i class="fas fa-plus"></i></div>
+            <div class="button-text">Upload Image</div>
+        </div>
+        
+        <div class="button-wrapper" id="cameraButton">
+            <div class="button-icon"><i class="fas fa-camera"></i></div>
+            <div class="button-text">Use Camera</div>
+        </div>
+    </div>
+
+    <input type="file" id="imageUpload" accept="image/*" style="display: none;" />
+    
+    <div id="confirmation">
+        <p>Is this the image you want to use?</p>
+        <img id="selectedImage" alt="Selected Room Image" />
+        <div>
+            <button id="yesButton">Yes</button>
+            <button id="noButton">No</button>
+        </div>
+    </div>
+
+    <script>
+        const imageUpload = document.getElementById('imageUpload');
+        const uploadButton = document.getElementById('uploadButton');
+        const cameraButton = document.getElementById('cameraButton');
+        const confirmationDiv = document.getElementById('confirmation');
+        const selectedImage = document.getElementById('selectedImage');
+        const yesButton = document.getElementById('yesButton');
+        const noButton = document.getElementById('noButton');
+
+        // Open file input when Upload Image button is clicked
+        uploadButton.addEventListener('click', function() {
+            imageUpload.click();
+        });
+
+        // Open camera when Use Camera button is clicked
+        cameraButton.addEventListener('click', function() {
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({ video: true })
+                    .then(function(stream) {
+                        const video = document.createElement('video');
+                        video.srcObject = stream;
+                        video.play();
+                        
+                        const videoContainer = document.createElement('div');
+                        videoContainer.appendChild(video);
+                        document.body.appendChild(videoContainer);
+                        
+                        const captureButton = document.createElement('button');
+                        captureButton.textContent = 'Capture Image';
+                        document.body.appendChild(captureButton);
+                        
+                        captureButton.addEventListener('click', function() {
+                            const canvas = document.createElement('canvas');
+                            const context = canvas.getContext('2d');
+                            canvas.width = video.videoWidth;
+                            canvas.height = video.videoHeight;
+                            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+                            selectedImage.src = canvas.toDataURL();
+                            confirmationDiv.style.display = 'block';
+                            
+                            // Stop the camera stream
+                            stream.getTracks().forEach(track => track.stop());
+                            videoContainer.remove();
+                            captureButton.remove();
+                        });
+                    })
+                    .catch(function(err) {
+                        console.error("Error accessing camera: " + err);
+                    });
+            } else {
+                alert("Camera not supported in this browser.");
+            }
+        });
+
+        // Handle image upload
+        imageUpload.addEventListener('change', function() {
+            const file = this.files[0]; // Get the uploaded file
+            if (file) {
+                const reader = new FileReader(); // Create a FileReader to read the file
+                reader.onload = function(e) {
+                    selectedImage.src = e.target.result; // Set the image source to the uploaded file
+                    confirmationDiv.style.display = 'block'; // Show the confirmation div
+                }
+                reader.readAsDataURL(file); // Read the file as a data URL
+            }
+        });
+
+        // Confirm image selection
+        yesButton.addEventListener('click', function() {
+            const imageSrc = selectedImage.src;
+            localStorage.setItem('imageSrc', imageSrc);
+            window.location.href = 'displayimage.html';
+        });
+
+        // Discard image selection
+        noButton.addEventListener('click', function() {
+            confirmationDiv.style.display = 'none'; // Hide confirmation div
+            imageUpload.value = ''; // Clear the input value
+        });
+    </script>
+
+</body>
+</html>

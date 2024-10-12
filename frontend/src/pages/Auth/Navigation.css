@@ -1,0 +1,152 @@
+.navigation {
+    display: flex;
+    justify-content: space-around;
+    align-items: center; /* Center items vertically */
+    background-color: #93485b;
+    padding: 0.3rem;
+    position: sticky; /* or 'fixed', depending on your design */
+    top: 0;           /* Sticks to the top */
+    z-index: 10;     /* Ensure it stays above other content */
+    width: 100%;     /* Make sure it spans the full width */
+}
+
+.nav-item {
+    color: white;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column; /* Stack icon and text */
+    align-items: center;
+    transition: background 0.3s;
+    position: relative; /* Ensure the dropdown positions correctly */
+    margin: 0 10px; /* Add spacing between icons */
+    cursor: pointer; /* Show pointer on hover */
+}
+
+.nav-item svg {
+    margin-top: 0.2rem; /* Margin to the right of the icons */
+    width: 1.5rem; /* Increase width */
+    height: 1.5rem; /* Increase height */
+    transition: transform 0.2s;
+     /* Optional: Add transition for hover effects */
+}
+
+.nav-text {
+    opacity: 0; /* Hide text initially */
+    transition: opacity 0.3s;
+}
+
+.nav-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.nav-item:hover .nav-text {
+    opacity: 1; /* Show text on hover */
+}
+
+.dropdown-menu {
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    top: 100%; /* Position below the button */
+    left: 0;   /* Align to the left of the button */
+    z-index: 20; /* Ensure it appears above other elements */
+}
+
+.dropdown-item {
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    display: block;
+    color: #333;
+}
+
+.dropdown-item:hover {
+    background: #f0f0f0;
+}
+
+.account-message {
+    background-color: #f8d7da; /* Light red background */
+    color: #721c24; /* Dark red text */
+    padding: 10px;
+    border-radius: 4px;
+    margin-top: 10px; /* Space above the message */
+}
+.navigation {
+    display: flex;
+    align-items: center; /* Center items vertically */
+}
+
+.nav-item {
+    display: flex;
+    align-items: center; /* Align icons and text */
+    padding: 0.4rem; /* Adjust padding as necessary */
+}
+
+.nav-text {
+    margin-left: 0.5rem; /* Space between icon and text */
+}
+
+.interior-styler-text {
+    font-family: 'Dancing Script', cursive; /* Use the imported font */
+    font-size: 2rem; /* Adjust size as needed */
+    font-weight: normal; /* Change weight as needed */
+    margin-bottom: 0.5rem; /* Space below the text */
+    color: #fff; /* Change color as needed */
+}
+
+
+/* Additional styles for dropdown and other items */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**#navigation-container {
+    width: 4%;
+    transition: width 0.3s ease-in-out;
+    overflow: hidden; /* Hide overflowing content during transition 
+
+
+#navigation-container:hover 
+    width: 15%;
+
+
+.nav-item-name {
+    display: none;
+    transition: opacity 0.2s ease-in-out;
+
+
+#navigation-container:hover .nav-item-name {
+    display: block;
+    opacity: 1;
+}
+
+
+
+/*.search-input {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out; /* Add opacity transition 
+}
+
+#navigation-container:hover .search-input {
+    display: block;
+    opacity: 1;
+}
+
+#navigation-container:hover .search-icon {
+    display: none;
+    transition: opacity 0.2s ease-in-out; /* Add opacity transition 
+}*/

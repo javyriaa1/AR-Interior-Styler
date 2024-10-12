@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AR Model Viewer</title>
+<script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<model-viewer src="../assets/Models/bluearmchair.glb" poster="../assets/Models/bluearmchair.png" shadow-intensity="1" ar camera-controls touch-action="pan-y" alt="A 3D model carousel">
+    <button id="ar-button" aria-label="View in AR" onclick="window.location.href='uploadimg.html'">View in AR</button>
+
+    <button id="ar-failure">AR is not tracking!</button>
+
+    <div class="slider">
+    <div class="slides">
+        <button class="slide selected" onclick="switchSrc(this, 'bluearmchair')" style="background-image: url('../assets/Models/bluearmchair.png');"></button>
+        <button class="slide" onclick="switchSrc(this, 'lamps')" style="background-image: url('../assets/Models/lamps.png');"></button>
+        <button class="slide" onclick="switchSrc(this, 'hourglasstable')" style="background-image: url('../assets/Models/hourglasstable.png');"></button>
+        <button class="slide" onclick="switchSrc(this, 'wallpainting')" style="background-image: url('../assets/Models/wallpainting.png');"></button>
+        <button class="slide" onclick="switchSrc(this, 'pinksofas')" style="background-image: url('../assets/Models/pinksofas.png');"></button>
+    </div>
+</div>
+</model-viewer>
+
+<script type="module">
+    const modelViewer = document.querySelector("model-viewer");
+    window.switchSrc = (element, name) => {
+    const base = "../assets/Models/" + name;
+    modelViewer.src = base + '.glb';
+    modelViewer.poster = base + '.png';
+    const slides = document.querySelectorAll(".slide");
+    slides.forEach((element) => {element.classList.remove("selected");});
+    element.classList.add("selected");
+    };
+    document.querySelector(".slider").addEventListener('beforexrselect', (ev) => {
+    ev.preventDefault();
+    });
+</script>
+</body>
+</html>               
