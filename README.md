@@ -12,7 +12,7 @@ AR Interior Styler is a web application built using the MERN stack (MongoDB, Exp
 ## Technologies Used
 
 - **MERN Stack**:
-  - **MongoDB**: Database for storing user data and 3D model information.
+  - **MongoDB**: Database for storing user data.
   - **Express**: Backend framework to handle API requests and manage server operations.
   - **React**: Frontend library for building user interfaces.
   - **Node.js**: Server-side runtime environment for executing JavaScript code.
